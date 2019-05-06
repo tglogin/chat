@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Keywords" content="关键词123">
+    <meta name="Description" content="描述">
+    <link rel="stylesheet" href="/static/public/login/css/login.css">
+    <link rel="shortcut icon" href="__PUBLIC__/images/www.ico.la_32X32.ico">
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <title>易聊网</title>
+</head>
+<body style="height: 5000px">
+<!-- **************头部页面开始****** -->
+<div class="w">
+    <!--<div id="logo" style="height: 50px;">-->
+    <!--<a href="{:U('Index/index')}">-->
+    <!--<p style="font-size: 18px;">咱假装这里是<span style="color: #f00;">LOGO</span></p>-->
+    <!--&lt;!&ndash;<img src="__HOME__/images/logo_th2.png" alt="">&ndash;&gt;-->
+    <!--</a>-->
+    <!--<b></b>-->
+    <!--</div>-->
+    <div class="top">易聊&nbsp;·&nbsp;让聊天更容易</div>
+    <!-- 左边登录logo结束 -->
+</div>
+<!-- ************头部页面结束********** -->
+<div id="content">
+    <!-- login-wrapk开始 -->
+    <div class="login-wrap">
+        <!-- w开始 -->
+        <div class="w">
+            <!-- *****************登录页面开始************ -->
+            <div class="login-form">
+                <div class="login-tab login-tab-l">
+                    <a href="javascript:;">扫码登录</a>
+                </div>
+                <div class="login-tab login-tab-r">
+                    <a href="javascript:;">账号登录</a>
+                </div>
+                <!-- login-box开始（账户登录） -->
+                <div class="login-box" style="visibility: visible; display:block">
+                    <div class="mt tab-h"></div>
+                    <!-- 登录提示信息开始 -->
+                    <div class="msg-wrap">
+                        <div class="msg-warn">
+                            <b></b>
+                            公共场所不建议自动登录，以防账号丢失
+                        </div>
+                        <div class="msg-error hide">
+                            <b></b>
+                        </div>
+                    </div>
+                    <!-- 登录提示信息结束 -->
+                    <div class="mc">
+                        <div class="form">
+                            <form action="" id="formlogin" method="post" onSubmit="return false;">
+                                <!-- 用户名输入框fore1 -->
+                                <div class="item item-fore1 item-error">
+                                    <label for="name" class="login-label name-label"></label>
+                                    <input type="text" name="user_name" id="name" class="itxt" tabindex="1"
+                                           autocomplete="off" placeholder="用户名/已验证手机">
+                                    <div class="clear-btn">
+                                        <span></span>
+
+                                    </div>
+                                </div>
+                                <!-- 密码输入框fore2 -->
+                                <div id="entry" class="item item-fore2" style="visibility: visible">
+                                    <label class="login-label pwd-label" for="user_pwd"></label>
+                                    <input type="password" name="user_pwd" id="user_pwd"
+                                           class="itxt itxt-error" tabindex="2" autocomplete="off" placeholder="密码">
+                                    <div class="clear-btn">
+                                        <span></span>
+
+                                    </div>
+                                </div>
+                                <!-- 图片验证码开始 fore3-->
+                                <!--<div class="verify">-->
+                                <!--<input type="text" name="verify" id="verify"/>-->
+                                <!--<span id="code">-->
+                                <!--<img src="{:U('verify')}" alt="验证码" class='yzmImg'-->
+                                <!--onclick="this.src='{:U(\'verify\',array(\'num\'=>mt_rand()))}'"/>-->
+                                <!--</span>-->
+                                <!--<div class="clear-btn">-->
+                                <!--<span></span>-->
+
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!-- 自动登录开始fore4 -->
+                                <div class="item item-fore4" style="margin: 10px 0px;">
+                                    <div class="safe" style="height: 30px;line-height: 30px">
+                                        <input type="checkbox" name="chkRememberMe" id="autologin" tabindex="3"
+                                               style="float: left;margin:10px 5px 10px 0px"/>
+                                        <label style="line-height: 30px;display: inline-block;float:left;">自动登录</label>
+                                        <span class="forget-pw-safe">
+                        			<a href="">忘记密码</a>
+                        		</span>
+                                    </div>
+                                </div>
+                                <!-- 登录按钮开始 -->
+                                <div class="item item-fore5">
+                                    <div class="login-btn">
+                                        <a href="" class="btn-img btn-entry" id="loginsubmit" tabindex="6">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- mc结束 2input+自动登录+登录按钮-->
+
+                </div>
+                <!-- login-box结束（账户登录） -->
+                <!-- 二维码登陆开始 （扫码登录）-->
+                <div class="qrcode-login">
+                    <div class="mc">
+                        <div class="qrcode-error-2016">
+                            <div class="qrcode-error-mask"></div>
+                            <p class="err-cont">服务器出错</p>
+                            <a href="javascript:void(0)" class="refresh-btn">刷新</a>
+                        </div>
+                        <div class="qrcode-main">
+
+                            <div class="qrcode-img" style="">
+                                <img src="/static/public/login/nav/code.png" alt="">
+                                <div class="qrcode-error-02 hide" id="J-qrcodeerror" style="display: none;">
+                                    <a href="#none">
+                                        <span class="error-icon"></span>
+                                        <div class="txt">
+                                            网络开小差咯
+                                            <span class="ml10">刷新二维码</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="qrcode-help" style="display: none;"></div>
+                        </div>
+                        <!-- 二维码结束 -->
+                        <div class="qrcode-panel">
+                            <ul>
+                                <li class="fore1">
+                                    <span>打开</span>
+                                    <a href="">
+                                        <span class="red">易聊app</span>
+                                    </a>
+                                </li>
+                                <li>扫描二维码</li>
+                            </ul>
+                        </div>
+                        <!-- panel结束 -->
+                        <div class="coagent qr-coagent" id="qrCoagent" style="display: block; visibility: visible;">
+                            <ul>
+                                <li><b></b><em>免输入</em></li>
+                                <li><b class="faster"></b><em>更快&nbsp;</em></li>
+                                <li><b class="more-safe"></b><em>更安全</em></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- mc结束 -->
+                </div>
+                <!-- 二维码登录结束 （扫码登录）-->
+                <!-- 登录框底部登录方式 开始qq,微信-->
+                <div class="coagent" id="kbCoagent">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0)" onClick="return false;" class="pdl">
+                                <b class="QQ-icon"></b>
+                                <span>QQ</span>
+                            </a>
+                            <span class="line">|</span>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" onClick="return false;" class="pdl">
+                                <b class="weixin-icon"></b>
+                                <span>微信</span>
+                            </a>
+                            <span class="line">|</span>
+                        </li>
+                        <li>
+                            <a href="{:U('Index/index')}" onClick="">
+                                首页
+                            </a>
+                            <span class="line">|</span>
+                        </li>
+                        <li class="extra-r">
+                            <div class="regist-link">
+                                <a href="{:U('Reg/reg')}" onClick="" class="">
+                                    <b></b>立即注册
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 登录框底部登录方式 结束qq,微信-->
+            </div>
+            <!-- ************ 登录页面login-form结束************  -->
+        </div>
+        <!-- w结束 -->
+        <!-- 中间广告部分开始 -->
+        <div class="login-banner">
+            <div class="w">
+
+            </div>
+        </div>
+        <!-- 中间背景广告结束 -->
+    </div>
+    <!-- login-wrap结束 -->
+</div>
+<!-- 内容部分结束 -->
+<!-- 底部页面开始 -->
+
+<!-- 底部页面结束 -->
+
+</body>
+<script src="/static/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/layer/layer.js"></script>
+<script type="text/javascript">
+    //表单验证配置
+    var myvalidate = $('#formlogin').validate({
+        errorPlacement: function (error, element) {
+            if (element.is("input[name='verify']")) {
+                error.appendTo(element.next().next())
+            } else {
+                error.appendTo(element.next())
+            }
+        },
+        //配置验证规则
+        rules: {
+            name: {  //规则名称是表单元素的name属性值
+                required: true,
+                minlength: 2,
+                maxlength: 20,
+                remote: {
+                    url: '{:U("chkUser")}',
+                    type: 'post'
+                }
+            },
+            user_pwd: {
+                required: true,
+                minlength: 6,
+                maxlength: 20
+            },
+            // verify: {
+            //     required: true,
+            //     remote: {
+            //         url: '{:U("chkVerify")}',
+            //         type: 'post'
+            //     }
+            //
+            // }
+        },
+        //配置提示信息
+        messages: {
+            name: {  //规则名称是表单元素的name属性值
+                required: '用户名不能为空',
+                minlength: '用户名至少需要4个字符',
+                maxlength: '用户名最多允许20个字符',
+                remote: '用户名不存在'
+            },
+            user_pwd: {
+                required: '密码不能为空',
+                minlength: '密码至少需要6个字符',
+                maxlength: '密码最多允许20个字符'
+            },
+            // verify: {
+            //     required: '验证码不能为空',
+            //     remote: '验证码错误'
+            // }
+        },
+        //配置成功提示样式
+        errorElement: 'div',
+
+        success: function (label) {
+            //label.prev().text('');
+            label.text('验证通过').css('color', '#0f0');
+        },
+        validClass: "ok"
+
+    })
+
+
+    //表单验证
+    //输入框聚焦
+    $('#name').focus(function () {
+        $(this).next('div').children('div').html('');
+        $(this).next('div').children('span').html(' 请输入用户名或已验证电话').css('color', '#ccc');
+    })
+    $('#user_pwd').focus(function () {
+        $(this).next('div').children('div').html('');
+        $(this).next('div').children('span').html(' 请填写正确的密码').css('color', '#ccc');
+    })
+    // $('#verify').focus(function () {
+    //     $(this).next().next('div').children('div').html('');
+    //     $(this).next().next('div').children('span').html(' 请输入验证码').css('color', '#ccc');
+    // })
+    //输入框失去焦点
+    $('#name').blur(function () {
+        $(this).next('div').children('div').html('').css('color', '#f00');
+        $(this).next('div').children('span').html('');
+        if ($(this).val().length == 0) {
+            $(this).next('div').children('div').html('用户名不能为空').css('color', '#f00');
+        }
+    })
+    $('#user_pwd').blur(function () {
+        $(this).next('div').children('div').html('').css('color', '#f00');
+        $(this).next('div').children('span').html(' ');
+        if ($(this).val().length == 0) {
+            $(this).next('div').children('div').html('密码不能为空').css('color', '#f00');
+        }
+    })
+    $('#verify').blur(function () {
+        $(this).next().next('div').children('div').html('').css('color', '#f00');
+        $(this).next().next('div').children('span').html('');
+        if ($(this).val().length == 0) {
+            $(this).next().next('div').children('div').html('验证码不能为空').css('color', '#f00');
+        }
+    })
+    //提交表单
+    $('#loginsubmit').click(function () {
+        if (myvalidate.form()) {
+            //登陆状态改变
+            $('#loginsubmit').click(function () {
+                //改变登陆框状态
+                $(this).html('登录中...');
+                $(this).css({'disabled': 'disabled'})
+            })
+            $.post("/login", $('form').serialize(), function (res) {
+                console.log(res);
+                if (res.status == 1) {
+                    layer.msg('登陆成功', {icon: 6, time: 1000}, function () {
+                        location.href = "/index?user_no=" + res.data.user_no
+                    })
+                } else {
+                    $('#name').next().html('');
+                    $('#name').parent().css('border', 'solid 1px red');
+                    $('#name').next().html('用户名或密码不正确');
+                }
+                $(this).html('登录');
+            }, 'json')
+        }
+        return false;
+    })
+
+
+    //微信登录和账号登录切换
+    $(".login-tab-r").click(function () {
+        $(".login-box").css({"display": "block", "visibility": "visible"});
+        $(".qrcode-login").css({"display": "none"})
+    });
+    $(".login-tab-l").click(function () {
+        $(".login-box").css({"display": "none"});
+        $(".qrcode-login").css({"display": "block", "visibility": "visible"})
+    });
+    //点击微信图片显示帮助
+    $(".qrcode-img").hover(function () {
+        $(".qrcode-img").css({"left": "0"});
+        $(".qrcode-help").css({"display": "block"});
+    }, function () {
+        $(".qrcode-img").css({"left": "64px"});
+        $(".qrcode-help").css({"display": "none"});
+    });
+</script>
+</html>
