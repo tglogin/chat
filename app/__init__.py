@@ -23,6 +23,8 @@ def create_app():
     # 配置数据库的连接字符串
     app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://{}:{}@{}:{}/{}".format(USER_NAME, USER_PWD, HOST, PORT,
                                                                             DATABASE_NAME)
+     # 取消信号追踪
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # 配置自动提交
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
     # 配置SECRET_KEY,SESSION时使用
