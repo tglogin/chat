@@ -4,7 +4,6 @@ from flask import render_template, request, session, redirect, make_response
 from .models import *
 import hashlib
 from app.common.funs import *
-from .bll import *
 from app.models import *
 
 

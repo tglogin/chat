@@ -1,0 +1,55 @@
+.file_frame{
+        width:215px;
+        height:100px;
+        background: #fff;
+        margin-right: 40px;
+        border: solid 1px #B2B2B2;
+}
+.left_text{
+    width:130px;
+    height:38px;
+    font-size: 14px;
+    float: left;
+    padding: 5px 5px 5px 15px;
+}
+.right_file{
+    width:72px;
+    height:68px;
+    float: right;
+}
+.right_file img{
+    width: 60px;
+    height:64px;
+    margin: 4px ;
+}
+.middle_text{
+    float: left;
+    width:115px;
+    height:15px;
+    font-size: 13px;
+    padding:0 5px 0 15px;
+    color: #B2B2B2;
+
+}
+.line{
+    clear: both;
+    width: 215px;
+    height: 2px;
+    border-bottom: solid 1px #E7E7E7 ;
+}
+.bottom_text{
+    clear: both;
+    width: 198px;
+    height: 22px;
+    font-size: 13px;
+    padding: 5px 0 5px 15px;
+    color: #B2B2B2;
+}
+.file_frame:hover{
+    background: #F5F5F5; ;
+}
+#progress{
+    width:150px;
+    height:10px;
+    float:left;
+}

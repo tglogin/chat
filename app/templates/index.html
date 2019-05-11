@@ -5,6 +5,18 @@
 		<title>易聊</title>
 		<link rel="stylesheet" href="/static/css/amazeui.min.css" />
 		<link rel="stylesheet" href="/static/css/index/main.css" />
+		<link rel="import" href="/static/view/face.html" id="face" />
+		<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/static/webuploader/webuploader.css">
+
+		<link rel="stylesheet" type="text/css" href="/static/imagePreview/css/pictureViewer.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/index/processBar.css" />
+		<style>
+			.send_msg{
+				width:160px;
+				height:80px;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="box">
@@ -341,6 +353,7 @@
 					<div class="windows_body">
 						<div class="office_text" style="height: 100%;">
 							<ul class="content" id="chatbox">
+								<div></div>
 								<li class="me"><img src="/static/images/own_head.jpg" title="金少凯"><span>疾风知劲草，板荡识诚臣</span></li>
 								<li class="other"><img src="/static/images/head/15.jpg" title="张文超"><span>勇夫安知义，智者必怀仁</span></li>
 							</ul>
@@ -348,16 +361,20 @@
 					</div>
 					
 					<div class="windows_input" id="talkbox">
-						<div class="input_icon">
+						<div class="input_icon" style="position:relative">
+							<a id="face_icon" href="javascript:;"></a>
+							<a id="picker" href="javascript:;"></a>
 							<a href="javascript:;"></a>
 							<a href="javascript:;"></a>
 							<a href="javascript:;"></a>
-							<a href="javascript:;"></a>
-							<a href="javascript:;"></a>
-							<a href="javascript:;"></a>
+							<!-- 表情 -->
+							<script type="text/javascript">
+								document.write(face.import.body.innerHTML)
+							</script>
 						</div>
 						<div class="input_box">
-							<textarea name="" rows="" cols="" id="input_box"></textarea>
+							<!--<textarea name="" rows="" cols="" id="input_box"></textarea>-->
+							<div class="message_frame" contentEditable='true'></div>
 							<button id="send">发送（S）</button>
 						</div>
 					</div>
@@ -369,50 +386,197 @@
 	<script type="text/javascript" src="/static/js/amazeui.min.js"></script>
 	<script type="text/javascript" src="/static/js/zUI.js"></script>
 	<script type="text/javascript" src="/static/js/index/wechat.js"></script>
+	<script src="/static/js/layer/layer.js"></script>
+	<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/static/webuploader/webuploader.min.js"></script>
+	<script src="/static/imagePreview/js/pictureViewer.js"></script>
 	
 	<script type="text/javascript">
+		var now_time = (new Date()).getTime();
 		//三图标
 		window.onload=function(){
+			var j=0;
+			var task_id = WebUploader.Base.guid(); // 产生文件唯一标识符task_id
+			var uploader = WebUploader.create({
+				swf: './static/webuploader/Uploader.swf',
+				server: '/file/upload/'+now_time, // 上传分片地址
+				pick: '#picker',
+				auto: true,
+				chunked: true,
+				chunkSize: 20 * 1024 * 1024,
+				chunkRetry: 3,
+				threads: 1,
+				duplicate: true,
+				formData: { // 上传分片的http请求中一同携带的数据
+					task_id: task_id,
+				},
+			});
+			arr_images = ['png', 'jpg','jpeg', 'jpeg', 'gif'];
+			file_exts = ['avi','css','docx','html','ini','mp3','pptx','rar','xls','xlxs','pdf','ppt','txt','zip'];//文件后缀
+			file_ext = true;
+			chat = $('#chatbox');
+			function get_file_size(filesize){
+				if(filesize < 1024){
+					filesize = filesize + 'B';
+				}else if(filesize < (1024*1024)){
+					filesize =(filesize/1024).toFixed(2) + 'K';
+				}else if(filesize < (1024*1024*1024)){
+					filesize =(filesize/1024/1024).toFixed(2) + 'M';
+				}else{
+					filesize =(filesize/1024/1024/1024).toFixed(2) + 'G';
+				}
+				return filesize;
+			}
+			uploader.on('fileQueued', function (file) {
+				a = jQuery.inArray(file.ext, arr_images);
+				if(a != -1) {	//如果是图片
+					file_ext = false;
+				}else{
+					file_ext = true;
+				}
+				//如果上传的不是图片
+				if (file_ext) {
+					chat.append('<li class="me"><img src="'+'/static/images/own_head.jpg'+'"><i></i></li>') ;
+					$("#chatbox li").last().children('i').load('/static/view/processBar.html',function () {
+						//获取文件名
+						file_name = file.name;
+						str_file_ext = file.ext;
+						is_in =jQuery.inArray(str_file_ext,file_exts);
+						if(is_in == -1){
+							file_icon = 'c.png'
+						}else{
+							file_icon = str_file_ext + '.png'
+						}
+						$(' .left_text').last().children('k').html(file_name);
+						$('.file_frame .right_file').last().children('img').attr('src','/static/images/file_icon/'+file_icon);
+						//filename = file.name;
+						$('#progress').show();
+						$('.progress-bar').css('width', '0%');
+						$('.progress-bar').text('0%');
+						$('.progress-bar').removeClass('progress-bar-danger progress-bar-success');
+						//$('.progress-bar').addClass('active progress-bar-striped');
+
+						//让滚动条到最底部
+						chat=$('#chatbox');
+						scrollTop = chat[0].scrollHeight;
+						chat.parent().scrollTop(scrollTop);
+					}) ;
+
+				}
+			});
+			uploader.on('startUpload', function () { // 开始上传时，调用该方法
+
+			});
+
+			uploader.on('uploadProgress', function (file, percentage) { // 一个分片上传成功后，调用该方法
+				$('.progress-bar').css('width', percentage * 100 - 1 + '%');
+				//$('.progress-bar').text(Math.floor(percentage * 100 - 1) + '%');
+			});
+
+			uploader.on('uploadSuccess', function (file) { // 整个文件的所有分片都上传成功后，调用该方法
+
+				var data = {'task_id': task_id, 'filename': file.name,'now_time':now_time};
+				$.get('/file/merge', data, function () {
+					if(file_ext){
+
+					}
+				}, 'json');
+				if(file_ext){
+					$('.progress-bar').css('width', '100%');
+					$('.progress-bar').text('100%');
+					$('.progress-bar').addClass('progress-bar-success');
+					$('.progress-bar').text('上传成功');
+					//关闭进度条
+					$('#progress').remove();
+					//显示文件大小
+					filesize = get_file_size(file.size);
+					$(' .middle_text').last().html(filesize);
+				}else{
+					file_info = file.source.source;
+					var reader = new FileReader();
+					//将文件以Data URL形式读入页面
+					reader.readAsDataURL(file_info);
+					reader.onload=function(e){
+						$('#chatbox').append(
+								'<li class="me"><img src="'+
+								'/static/images/own_head.jpg">'+
+								'<img class="send_msg" src="'+this.result+'" />'+'</li>'
+
+						) ;
+						//让滚动条到最底部
+						chat=$('#chatbox');
+						scrollTop = chat[0].scrollHeight;
+						chat.parent().scrollTop(scrollTop);
+					}
+				}
+
+			});
+
+			uploader.on('uploadError', function (file) { // 上传过程中发生异常，调用该方法
+				$('.progress-bar').css('width', '100%');
+				$('.progress-bar').text('100%');
+				$('.progress-bar').addClass('progress-bar-danger');
+				$('.progress-bar').text('上传失败');
+			});
+
+			uploader.on('uploadComplete', function (file) { // 上传结束，无论文件最终是否上传成功，该方法都会被调用
+				$('.progress-bar').removeClass('active progress-bar-striped');
+			});
+			$('#progress').hide();
+			//发送消息
+			$('#send').click(function () {
+				msg = $(this).prev('div');
+				if(msg.html()==''){
+					layer.msg('消息不能为空');
+				}else{
+					chat = $('#chatbox');
+					talk = $('#talkbox');
+					chat.append('<li class="me"><img src="'+'/static/images/own_head.jpg'+'"><span>'+msg.html()+'</span></li>') ;
+					msg.html('');
+					scrollTop = chat[0].scrollHeight;
+					chat.parent().scrollTop(scrollTop);
+				}
+			});
 			function a(){
 				var si1 = document.getElementById('si_1');
 				var si2 = document.getElementById('si_2');
 				var si3 = document.getElementById('si_3');
 				si1.onclick=function(){
-					si1.style.background="url(/static/images/icon/head_2_1.png) no-repeat"
+					si1.style.background="url(/static/images/icon/head_2_1.png) no-repeat";
 					si2.style.background="";
 					si3.style.background="";
 				};
 				si2.onclick=function(){
-					si2.style.background="url(/static/images/icon/head_3_1.png) no-repeat"
+					si2.style.background="url(/static/images/icon/head_3_1.png) no-repeat";
 					si1.style.background="";
 					si3.style.background="";
 				};
 				si3.onclick=function(){
-					si3.style.background="url(/static/images/icon/head_4_1.png) no-repeat"
+					si3.style.background="url(/static/images/icon/head_4_1.png) no-repeat";
 					si1.style.background="";
 					si2.style.background="";
 				};
 			};
-			function b(){
-				var text = document.getElementById('input_box');
-				var chat = document.getElementById('chatbox');
-				var btn = document.getElementById('send');
-				var talk = document.getElementById('talkbox');
-				btn.onclick=function(){
-					if(text.value ==''){
-			            alert('不能发送空消息');
-			        }else{
-						chat.innerHTML += '<li class="me"><img src="'+'/static/images/own_head.jpg'+'"><span>'+text.value+'</span></li>';
-						text.value = '';
-						chat.scrollTop=chat.scrollHeight;
-						talk.style.background="#fff";
-						text.style.background="#fff";
-					};
-				};
-			};
+			//图片放大
+			$('#chatbox').on('click','.send_msg',function () {
+				j=0;
+				var this_ = $(this);
+				images = $('#chatbox').find('.send_msg');
+				var imagesArr = new Array();
+				$.each(images, function (i, image) {
+					j=j+1;
+					imagesArr.push($(image).attr('src'));
+					$(image).attr('id',j);
+				});
+				$.pictureViewer({
+					images: imagesArr, //需要查看的图片，数据类型为数组
+					initImageIndex: this_.attr('id'), //初始查看第几张图片，默认0
+					scrollSwitch: true //是否使用鼠标滚轮切换图片，默认false
+				});
+			});
+
 			a();
-			b();
-		};
+		}
 	</script>
 	</body>
 </html>

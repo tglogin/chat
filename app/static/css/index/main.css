@@ -352,6 +352,13 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 	color: #999;
 	font-size: 12px;
 }
+.message_frame{
+	height: 60px;
+	outline: none;
+	padding-left: 33px;
+	padding-right: 37px;
+	font-size:14px
+}
 
 .user_time{
 	float: right;
@@ -381,7 +388,7 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
     width: 100%;
 	height:calc(100% - 62px);
     position: relative;
-    display: inline-block;	
+    display: inline-block;
 }
 
 .friends_list li > p{
@@ -635,11 +642,10 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
 	width: 100%;
 	padding:10px 20px;
 }
-
 .me img{
 	float: right;
-    width: 34px;
-    height: 34px;
+    /*width: 34px;*/
+    /*height: 34px;*/
     border-radius: 2px; 
 }
 
@@ -666,6 +672,7 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
     max-width:80%;
     border: 1px solid #9eea6a;
     position: relative;
+	word-break: break-all;
 }
 
 .me span:before{
@@ -726,34 +733,3 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover{
     right: inherit;
     right: 100%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

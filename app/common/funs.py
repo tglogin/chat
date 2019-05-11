@@ -1,6 +1,5 @@
 from flask import request, session, json
-import socket
-import struct
+import socket, struct, time, os
 
 
 # 判断用户是否登录
@@ -12,6 +11,29 @@ def chkLogin():
     res = session.get(str(user_no))
     if res:
         return user_no
+
+
+# 获取当前日期时间
+def get_now_date():
+    now_time = time.time()
+    return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(now_time))
+
+
+# 获取当前时间戳（毫秒）
+def get_mill_time():
+    return int(time.time() * 1000)
+
+
+# 获取当前时间戳（秒）
+def get_time():
+    return int(time.time())
+
+
+# 如果不存在文件/目录，就创建
+def chk_path(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+    return path
 
 
 # 将字符串ip转为int类型ip

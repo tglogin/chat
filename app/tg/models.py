@@ -15,6 +15,7 @@ def chkUserPwd(user_name, user_pwd):
 
     return False
 
+
 # 根据id获取用户所有信息
 def get_user_info_by_id(user_id):
     res = db.session.query(User).filter_by(user_id=user_id).first()
